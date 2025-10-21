@@ -92,55 +92,57 @@
     </div>
 
     <header class="navbar protected">
-      <a class="logo" href="#" aria-label="Mohamed UAQ Realestates">
-        <div class="brand-emblem" aria-hidden="true">
-          <svg viewBox="0 0 64 64" role="presentation">
-            <defs>
-              <linearGradient id="brandGradientNav" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#2f6bff" />
-                <stop offset="45%" stop-color="#5d8bff" />
-                <stop offset="100%" stop-color="#94b5ff" />
-              </linearGradient>
-            </defs>
-            <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#brandGradientNav)" />
-            <path
-              d="M18 44L18 20L24 20L32 32L40 20L46 20L46 44L40 44L40 31L32 41L24 31L24 44Z"
-              fill="#ffffff"
-            />
-          </svg>
+      <div class="navbar-inner page-shell">
+        <a class="logo" href="#" aria-label="Mohamed UAQ Realestates">
+          <div class="brand-emblem" aria-hidden="true">
+            <svg viewBox="0 0 64 64" role="presentation">
+              <defs>
+                <linearGradient id="brandGradientNav" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#2f6bff" />
+                  <stop offset="45%" stop-color="#5d8bff" />
+                  <stop offset="100%" stop-color="#94b5ff" />
+                </linearGradient>
+              </defs>
+              <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#brandGradientNav)" />
+              <path
+                d="M18 44L18 20L24 20L32 32L40 20L46 20L46 44L40 44L40 31L32 41L24 31L24 44Z"
+                fill="#ffffff"
+              />
+            </svg>
+          </div>
+          <div class="brand-wordmark">
+            <span class="brand-title">Mohamed UAQ</span>
+            <span class="brand-subtitle">Realestates</span>
+          </div>
+        </a>
+        <nav class="nav-links">
+          <a href="#features" data-i18n="nav.features">المزايا</a>
+          <a href="#dashboard" data-i18n="nav.dashboard">لوحة التحكم</a>
+          <a href="#rental-cases" data-i18n="nav.cases">القضايا الإيجارية</a>
+          <a href="#reports" data-i18n="nav.reports">التقارير</a>
+          <a href="#contact" data-i18n="nav.contact">تواصل معنا</a>
+        </nav>
+        <div class="nav-actions">
+          <div class="language-switcher">
+            <label class="visually-hidden" for="language-select-nav" data-i18n="language.label"
+              >اختر اللغة</label
+            >
+            <select id="language-select-nav" class="language-select" data-language-control>
+              <option value="ar">العربية</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+          <button class="secondary-btn" id="open-account-settings" data-i18n="nav.account">
+            إعدادات الحساب
+          </button>
+          <button class="secondary-btn" id="logout-btn" data-i18n="nav.logout">تسجيل الخروج</button>
+          <button class="primary-btn" data-i18n="nav.cta">ابدأ الآن</button>
         </div>
-        <div class="brand-wordmark">
-          <span class="brand-title">Mohamed UAQ</span>
-          <span class="brand-subtitle">Realestates</span>
-        </div>
-      </a>
-      <nav class="nav-links">
-        <a href="#features" data-i18n="nav.features">المزايا</a>
-        <a href="#dashboard" data-i18n="nav.dashboard">لوحة التحكم</a>
-        <a href="#rental-cases" data-i18n="nav.cases">القضايا الإيجارية</a>
-        <a href="#reports" data-i18n="nav.reports">التقارير</a>
-        <a href="#contact" data-i18n="nav.contact">تواصل معنا</a>
-      </nav>
-      <div class="nav-actions">
-        <div class="language-switcher">
-          <label class="visually-hidden" for="language-select-nav" data-i18n="language.label"
-            >اختر اللغة</label
-          >
-          <select id="language-select-nav" class="language-select" data-language-control>
-            <option value="ar">العربية</option>
-            <option value="en">English</option>
-          </select>
-        </div>
-        <button class="secondary-btn" id="open-account-settings" data-i18n="nav.account">
-          إعدادات الحساب
-        </button>
-        <button class="secondary-btn" id="logout-btn" data-i18n="nav.logout">تسجيل الخروج</button>
-        <button class="primary-btn" data-i18n="nav.cta">ابدأ الآن</button>
       </div>
     </header>
 
     <main class="protected">
-      <section class="hero">
+      <section class="hero page-shell">
         <div class="hero-content">
           <h1 data-i18n="hero.title">منصة Mohamed UAQ Realestates المتكاملة لإدارة العقارات</h1>
           <p data-i18n="hero.description">
@@ -191,7 +193,7 @@
         </div>
       </section>
 
-      <section class="features" id="features">
+      <section class="features page-shell" id="features">
         <h2 data-i18n="features.title">حل محاسبي متكامل للعقارات</h2>
         <p class="section-subtitle" data-i18n="features.subtitle">
           كل الأدوات التي تحتاجها لمتابعة محفظتك العقارية وتحليل أدائها المالي
@@ -232,7 +234,7 @@
         </div>
       </section>
 
-      <section class="dashboard" id="dashboard">
+      <section class="dashboard page-shell" id="dashboard">
         <div class="dashboard-header">
           <h2 data-i18n="dashboard.title">لوحة تحكم الملاك</h2>
           <p data-i18n="dashboard.subtitle">
@@ -311,7 +313,7 @@
         </div>
       </section>
 
-      <section class="rental-cases" id="rental-cases">
+      <section class="rental-cases page-shell" id="rental-cases">
         <div class="section-intro">
           <h2 data-i18n="cases.title">نظام إدارة القضايا الإيجارية</h2>
           <p data-i18n="cases.subtitle">
@@ -458,7 +460,7 @@
         </div>
       </section>
 
-      <section class="reports" id="reports">
+      <section class="reports page-shell" id="reports">
         <div class="reports-header">
           <h2 data-i18n="reports.title">التقارير المحاسبية</h2>
           <p data-i18n="reports.subtitle">
@@ -503,7 +505,7 @@
         </div>
       </section>
 
-      <section class="cta" id="contact">
+      <section class="cta page-shell" id="contact">
         <div class="cta-card">
           <h2 data-i18n="cta.title">جاهز لتنظيم إدارة عقاراتك؟</h2>
           <p data-i18n="cta.subtitle">
@@ -576,21 +578,23 @@
     </main>
 
     <footer class="footer protected">
-      <div>
-        <strong>Mohamed UAQ Realestates</strong>
-        <p data-i18n="footer.tagline">حلول محاسبية وتنظيمية شاملة للملاك ومديري العقارات.</p>
-      </div>
-      <div>
-        <h4 data-i18n="footer.contact.title">تواصل معنا</h4>
-        <p data-i18n="footer.contact.email">البريد: support@mohameduaq.com</p>
-        <p data-i18n="footer.contact.phone">الهاتف: 050 891 1211</p>
-      </div>
-      <div>
-        <h4 data-i18n="footer.follow.title">تابعنا</h4>
-        <div class="social-links">
-          <a href="#" aria-label="Twitter" data-i18n="footer.follow.twitter">تويتر</a>
-          <a href="#" aria-label="LinkedIn" data-i18n="footer.follow.linkedin">لينكدإن</a>
-          <a href="#" aria-label="Instagram" data-i18n="footer.follow.instagram">إنستغرام</a>
+      <div class="footer-inner page-shell">
+        <div>
+          <strong>Mohamed UAQ Realestates</strong>
+          <p data-i18n="footer.tagline">حلول محاسبية وتنظيمية شاملة للملاك ومديري العقارات.</p>
+        </div>
+        <div>
+          <h4 data-i18n="footer.contact.title">تواصل معنا</h4>
+          <p data-i18n="footer.contact.email">البريد: support@mohameduaq.com</p>
+          <p data-i18n="footer.contact.phone">الهاتف: 050 891 1211</p>
+        </div>
+        <div>
+          <h4 data-i18n="footer.follow.title">تابعنا</h4>
+          <div class="social-links">
+            <a href="#" aria-label="Twitter" data-i18n="footer.follow.twitter">تويتر</a>
+            <a href="#" aria-label="LinkedIn" data-i18n="footer.follow.linkedin">لينكدإن</a>
+            <a href="#" aria-label="Instagram" data-i18n="footer.follow.instagram">إنستغرام</a>
+          </div>
         </div>
       </div>
     </footer>
