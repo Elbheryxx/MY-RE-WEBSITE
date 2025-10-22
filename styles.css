@@ -37,103 +37,6 @@ body:not(.authenticated) {
   overflow: hidden;
 }
 
-.auth-overlay {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(15, 23, 42, 0.72);
-  backdrop-filter: blur(6px);
-  padding: clamp(1.5rem, 5vw, 3rem);
-  overflow-y: auto;
-  z-index: 100;
-  transition: opacity 0.3s ease;
-}
-
-.auth-overlay.overlay-hidden {
-  opacity: 0;
-  pointer-events: none;
-  visibility: hidden;
-}
-
-
-.auth-card {
-  background: #fff;
-  width: min(1080px, 100%);
-  max-height: min(92vh, 780px);
-  border-radius: 32px;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 35px 65px rgba(15, 23, 42, 0.22);
-  display: grid;
-  grid-template-columns: minmax(320px, 1.05fr) minmax(360px, 1fr);
-  overflow: hidden;
-}
-
-.auth-card-visual {
-  background: linear-gradient(135deg, rgba(47, 107, 255, 0.95), rgba(19, 36, 94, 0.95));
-  color: #fff;
-  display: grid;
-  gap: 1.5rem;
-  padding: clamp(2.25rem, 4vw, 3.25rem);
-  align-content: center;
-  justify-items: flex-start;
-}
-
-.auth-card-visual .auth-logo {
-  color: #fff;
-  justify-content: flex-start;
-}
-
-.auth-card-form {
-  padding: clamp(2.5rem, 5vw, 3.75rem);
-  display: grid;
-  gap: 1.5rem;
-  text-align: start;
-  background: #fff;
-  align-content: center;
-}
-
-.auth-form-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
-.auth-form-copy h1 {
-  margin: 0 0 0.5rem;
-}
-
-.auth-tagline {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.auth-highlights {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 1.25rem;
-}
-
-.auth-highlights li {
-  display: grid;
-  gap: 0.4rem;
-}
-
-.auth-highlights strong {
-  font-size: 1rem;
-}
-
-.auth-highlights span {
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.8);
-}
 
 .card-heading {
   display: flex;
@@ -161,16 +64,6 @@ body:not(.authenticated) {
 .mini-action-btn:focus {
   background: rgba(47, 107, 255, 0.15);
   border-color: rgba(47, 107, 255, 0.55);
-}
-
-.auth-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  font-size: 1.85rem;
-  font-weight: 700;
-  color: var(--primary);
 }
 
 .brand-emblem {
@@ -206,28 +99,6 @@ body:not(.authenticated) {
   color: var(--muted);
   letter-spacing: 0.25em;
   text-transform: uppercase;
-}
-
-.auth-subtitle {
-  color: var(--muted);
-  margin: 0;
-}
-
-.auth-form .form-group {
-  text-align: start;
-}
-
-.auth-error {
-  color: var(--danger);
-  font-size: 0.9rem;
-  min-height: 1.2rem;
-  margin: 0;
-}
-
-.auth-hint {
-  color: var(--muted);
-  font-size: 0.9rem;
-  margin: 0;
 }
 
 .nav-actions {
@@ -1278,21 +1149,6 @@ textarea:focus {
   place-items: center;
 }
 
-@media (min-width: 1200px) {
-  .auth-card {
-    grid-template-columns: minmax(360px, 1.1fr) minmax(400px, 1fr);
-  }
-
-  .auth-card-visual {
-    gap: 2rem;
-    padding: 3.5rem 3.75rem;
-  }
-
-  .auth-card-form {
-    padding: 3.75rem 4rem;
-  }
-}
-
 @media (max-width: 1200px) {
   :root {
     font-size: 15px;
@@ -1300,29 +1156,6 @@ textarea:focus {
 }
 
 @media (max-width: 992px) {
-  .auth-card {
-    grid-template-columns: 1fr;
-  }
-
-  .auth-card-visual {
-    text-align: center;
-    justify-items: center;
-    align-items: center;
-    align-content: center;
-  }
-
-  .auth-card-visual .auth-logo {
-    justify-content: center;
-  }
-
-  .auth-highlights li {
-    text-align: center;
-  }
-
-  .auth-card-form {
-    padding: clamp(2rem, 6vw, 2.75rem);
-  }
-
   .hero {
     padding-block-start: 5rem;
   }
@@ -1505,8 +1338,6 @@ textarea:focus {
     font-size: 13.5px;
   }
 
-  .auth-card-form,
-  .auth-card-visual,
   .modal-content {
     padding: 2rem 1.5rem;
   }
@@ -1524,7 +1355,6 @@ textarea:focus {
     align-items: stretch;
   }
 
-  .auth-form-header,
   .nav-actions {
     gap: 0.5rem;
   }
@@ -1538,10 +1368,6 @@ textarea:focus {
 
   .language-switcher {
     justify-content: center;
-  }
-
-  .auth-highlights {
-    gap: 1rem;
   }
 
   .hero-card,

@@ -13,107 +13,6 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div
-      id="auth-overlay"
-      class="auth-overlay"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="auth-title"
-      aria-describedby="auth-description"
-    >
-      <div class="auth-card">
-        <div class="auth-card-visual">
-          <div class="auth-logo" aria-label="Mohamed UAQ Realestates">
-            <div class="brand-emblem" aria-hidden="true">
-              <svg viewBox="0 0 64 64" role="presentation">
-                <defs>
-                  <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#2f6bff" />
-                    <stop offset="45%" stop-color="#5d8bff" />
-                    <stop offset="100%" stop-color="#94b5ff" />
-                  </linearGradient>
-                </defs>
-                <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#brandGradient)" />
-                <path
-                  d="M18 44L18 20L24 20L32 32L40 20L46 20L46 44L40 44L40 31L32 41L24 31L24 44Z"
-                  fill="#ffffff"
-                />
-              </svg>
-            </div>
-            <div class="brand-wordmark">
-              <span class="brand-title">Mohamed UAQ</span>
-              <span class="brand-subtitle">Realestates</span>
-            </div>
-          </div>
-          <p class="auth-tagline" data-i18n="auth.tagline">
-            منصة متكاملة للملاك لإدارة المحافظ، المتابعة القانونية، والتحليلات المالية.
-          </p>
-          <ul class="auth-highlights">
-            <li>
-              <strong data-i18n="auth.highlightPortfolio.title">إدارة المحافظ</strong>
-              <span data-i18n="auth.highlightPortfolio.body">تحكم في العقارات والوحدات والمؤشرات المالية.</span>
-            </li>
-            <li>
-              <strong data-i18n="auth.highlightCases.title">القضايا الإيجارية</strong>
-              <span data-i18n="auth.highlightCases.body">تابع القضايا والمطالبات والتسويات في لوحة واحدة.</span>
-            </li>
-            <li>
-              <strong data-i18n="auth.highlightSecurity.title">حماية متقدمة</strong>
-              <span data-i18n="auth.highlightSecurity.body">مصادقة آمنة مع إمكانية تحديث بيانات الدخول.</span>
-            </li>
-          </ul>
-        </div>
-        <div class="auth-card-form">
-          <div class="auth-form-header">
-            <div class="auth-form-copy">
-              <h1 id="auth-title" data-i18n="auth.title">تسجيل الدخول</h1>
-              <p id="auth-description" class="auth-subtitle" data-i18n="auth.description">
-                يرجى إدخال بيانات الاعتماد الخاصة بك للوصول إلى لوحة التحكم.
-              </p>
-            </div>
-            <div class="language-switcher">
-              <label class="visually-hidden" for="language-select-auth" data-i18n="language.label"
-                >اختر اللغة</label
-              >
-              <select id="language-select-auth" class="language-select" data-language-control>
-                <option value="ar">العربية</option>
-                <option value="en">English</option>
-              </select>
-            </div>
-          </div>
-          <form id="login-form" class="auth-form">
-            <div class="form-group">
-              <label for="login-username" data-i18n="auth.usernameLabel">اسم المستخدم</label>
-              <input
-                id="login-username"
-                type="text"
-                autocomplete="username"
-                required
-                data-i18n-placeholder="auth.usernamePlaceholder"
-              />
-            </div>
-            <div class="form-group">
-              <label for="login-password" data-i18n="auth.passwordLabel">كلمة المرور</label>
-              <input
-                id="login-password"
-                type="password"
-                autocomplete="current-password"
-                required
-                data-i18n-placeholder="auth.passwordPlaceholder"
-              />
-            </div>
-            <button type="submit" class="primary-btn full" data-i18n="auth.submit">
-              دخول
-            </button>
-            <p id="login-error" class="auth-error" role="alert" aria-live="assertive"></p>
-          </form>
-          <p class="auth-hint" data-i18n="auth.hint">
-            بعد تسجيل الدخول يمكنك تحديث بيانات الدخول من إعدادات الحساب.
-          </p>
-        </div>
-      </div>
-    </div>
-
     <header class="navbar protected">
       <div class="navbar-inner page-shell">
         <a class="logo" href="#" aria-label="Mohamed UAQ Realestates">
@@ -159,9 +58,9 @@
             إدارة البيانات
           </button>
           <button class="secondary-btn" id="open-account-settings" data-i18n="nav.account">
-            إعدادات الحساب
+            إعداد رمز الدخول
           </button>
-          <button class="secondary-btn" id="logout-btn" data-i18n="nav.logout">تسجيل الخروج</button>
+          <button class="secondary-btn" id="logout-btn" data-i18n="nav.logout">قفل المنصة</button>
           <button class="primary-btn" data-i18n="nav.cta">ابدأ الآن</button>
         </div>
       </div>
@@ -497,6 +396,30 @@
                   يتم تحميل بيانات المستأجر والعقد تلقائياً ويمكن تعديلها قبل الحفظ.
                 </p>
               </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="case-monthly-rent" data-i18n="cases.form.monthlyRentLabel"
+                    >قيمة الإيجار الشهري (د.إ)</label
+                  >
+                  <input
+                    id="case-monthly-rent"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="مثل 5200"
+                    data-i18n-placeholder="cases.form.monthlyRentPlaceholder"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="case-contract-start" data-i18n="cases.form.contractStartLabel"
+                    >بداية العقد</label
+                  >
+                  <input id="case-contract-start" type="date" />
+                </div>
+              </div>
+              <p class="form-hint" data-i18n="cases.form.contractStartHint">
+                يستخدم تاريخ بداية العقد لحساب المتأخرات. يمكنك تعديله قبل الحفظ إذا لزم الأمر.
+              </p>
               <div class="form-row">
                 <div class="form-group">
                   <label for="case-tenant-ar" data-i18n="cases.form.tenantLabelAr">اسم المستأجر (عربي)</label>
@@ -919,6 +842,20 @@
               </div>
               <div class="form-row">
                 <div class="form-group">
+                  <label for="case-manage-monthly-rent" data-i18n="data.cases.monthlyRent"
+                    >الإيجار الشهري (د.إ)</label
+                  >
+                  <input id="case-manage-monthly-rent" type="number" min="0" step="0.01" />
+                </div>
+                <div class="form-group">
+                  <label for="case-manage-contract-start" data-i18n="data.cases.contractStart"
+                    >بداية العقد المسجلة</label
+                  >
+                  <input id="case-manage-contract-start" type="date" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
                   <label for="case-manage-tenant-ar" data-i18n="data.cases.tenantAr">المستأجر (عربي)</label>
                   <input id="case-manage-tenant-ar" type="text" required />
                 </div>
@@ -986,42 +923,25 @@
         <button class="modal-close" id="close-account-modal" aria-label="إغلاق" data-i18n-aria-label="account.close">
           ×
         </button>
-        <h3 id="account-modal-title" data-i18n="account.title">تحديث بيانات الدخول</h3>
+        <h3 id="account-modal-title" data-i18n="account.title">تحديث رمز الدخول</h3>
         <p class="modal-subtitle" data-i18n="account.subtitle">
-          أدخل البيانات الحالية للتأكيد ثم اختر اسم مستخدم وكلمة مرور جديدة.
+          أدخل الرمز الحالي للتأكيد ثم اختر رمز وصول جديدًا.
         </p>
         <form id="credentials-form" class="credentials-form">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="current-username" data-i18n="account.currentUsername">اسم المستخدم الحالي</label>
-              <input id="current-username" type="text" autocomplete="username" required />
-            </div>
-            <div class="form-group">
-              <label for="current-password" data-i18n="account.currentPassword">كلمة المرور الحالية</label>
-              <input
-                id="current-password"
-                type="password"
-                autocomplete="current-password"
-                required
-              />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="new-username" data-i18n="account.newUsername">اسم المستخدم الجديد</label>
-              <input id="new-username" type="text" autocomplete="username" minlength="6" required />
-            </div>
-            <div class="form-group">
-              <label for="new-password" data-i18n="account.newPassword">كلمة المرور الجديدة</label>
-              <input id="new-password" type="password" autocomplete="new-password" required />
-            </div>
+          <div class="form-group">
+            <label for="current-access-code" data-i18n="account.currentCode">رمز الدخول الحالي</label>
+            <input id="current-access-code" type="password" inputmode="numeric" required />
           </div>
           <div class="form-group">
-            <label for="confirm-password" data-i18n="account.confirmPassword">تأكيد كلمة المرور الجديدة</label>
-            <input id="confirm-password" type="password" autocomplete="new-password" required />
+            <label for="new-access-code" data-i18n="account.newCode">رمز الدخول الجديد</label>
+            <input id="new-access-code" type="password" inputmode="numeric" minlength="4" required />
+          </div>
+          <div class="form-group">
+            <label for="confirm-access-code" data-i18n="account.confirmCode">تأكيد رمز الدخول الجديد</label>
+            <input id="confirm-access-code" type="password" inputmode="numeric" required />
           </div>
           <button type="submit" class="primary-btn full" data-i18n="account.submit">
-            حفظ التغييرات
+            حفظ الرمز
           </button>
           <p id="credentials-message" class="auth-feedback" aria-live="polite"></p>
         </form>

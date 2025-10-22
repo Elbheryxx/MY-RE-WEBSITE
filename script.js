@@ -13,14 +13,13 @@ const caseStopDateInput = document.getElementById("case-stop-date");
 const caseLegalFeesInput = document.getElementById("case-legal-fees");
 const caseOverrideAmountInput = document.getElementById("case-override-amount");
 const caseCalculatedAmount = document.getElementById("case-calculated-amount");
+const caseMonthlyRentInput = document.getElementById("case-monthly-rent");
+const caseContractStartInput = document.getElementById("case-contract-start");
 const caseTenantArInput = document.getElementById("case-tenant-ar");
 const caseTenantEnInput = document.getElementById("case-tenant-en");
 const caseActionArInput = document.getElementById("case-action-ar");
 const caseActionEnInput = document.getElementById("case-action-en");
 const ownerSelect = document.getElementById("owner-select");
-const authOverlay = document.getElementById("auth-overlay");
-const loginForm = document.getElementById("login-form");
-const loginError = document.getElementById("login-error");
 const logoutBtn = document.getElementById("logout-btn");
 const openAccountSettingsBtn = document.getElementById("open-account-settings");
 const accountModal = document.getElementById("account-modal");
@@ -86,6 +85,8 @@ const caseManageStopDateInput = document.getElementById("case-manage-stop-date")
 const caseManageLegalFeesInput = document.getElementById("case-manage-legal-fees");
 const caseManageOverrideInput = document.getElementById("case-manage-override");
 const caseManageCalculated = document.getElementById("case-manage-calculated");
+const caseManageMonthlyRentInput = document.getElementById("case-manage-monthly-rent");
+const caseManageContractStartInput = document.getElementById("case-manage-contract-start");
 const caseManageTenantArInput = document.getElementById("case-manage-tenant-ar");
 const caseManageTenantEnInput = document.getElementById("case-manage-tenant-en");
 const caseManageActionArInput = document.getElementById("case-manage-action-ar");
@@ -100,12 +101,12 @@ const managePropertiesBtn = document.getElementById("manage-properties-btn");
 const manageLedgerBtn = document.getElementById("manage-ledger-btn");
 const manageCasesBtn = document.getElementById("manage-cases-btn");
 
-const STORAGE_KEY = "mohamedUaqCredentials";
+const ACCESS_STORAGE_KEY = "mohamedUaqAccessCode";
+const LEGACY_CREDENTIALS_KEY = "mohamedUaqCredentials";
 const LANGUAGE_STORAGE_KEY = "mohamedUaqLanguage";
 const DATA_STORAGE_KEY = "mohamedUaqOwnerData";
-const DEFAULT_CREDENTIALS = {
-  username: "Elbhery",
-  password: "0508911211",
+const DEFAULT_ACCESS = {
+  code: "11223344",
 };
 
 const languageSettings = {
@@ -121,29 +122,10 @@ const translations = {
     language: {
       label: "اختر اللغة",
     },
-    auth: {
-      title: "تسجيل الدخول",
-      description: "يرجى إدخال بيانات الاعتماد الخاصة بك للوصول إلى لوحة التحكم.",
-      usernameLabel: "اسم المستخدم",
-      usernamePlaceholder: "اكتب اسم المستخدم",
-      passwordLabel: "كلمة المرور",
-      passwordPlaceholder: "اكتب كلمة المرور",
-      submit: "دخول",
-      hint: "بعد تسجيل الدخول يمكنك تحديث بيانات الدخول من إعدادات الحساب.",
-      errorInvalid: "بيانات الدخول غير صحيحة. يرجى المحاولة مرة أخرى.",
-      tagline: "منصة متكاملة للملاك لإدارة المحافظ، المتابعة القانونية، والتحليلات المالية.",
-      highlightPortfolio: {
-        title: "إدارة المحافظ",
-        body: "تحكم في العقارات والوحدات والمؤشرات المالية.",
-      },
-      highlightCases: {
-        title: "القضايا الإيجارية",
-        body: "تابع القضايا والمطالبات والتسويات في لوحة واحدة.",
-      },
-      highlightSecurity: {
-        title: "حماية متقدمة",
-        body: "مصادقة آمنة مع إمكانية تحديث بيانات الدخول.",
-      },
+    access: {
+      prompt: "أدخل رمز الدخول للوصول إلى المنصة (مثال: 11223344)",
+      error: "رمز الدخول غير صحيح. يرجى المحاولة مرة أخرى.",
+      cancelled: "تم إلغاء الإدخال. المنصة ستظل مقفلة حتى يتم إدخال الرمز الصحيح.",
     },
     nav: {
       features: "المزايا",
@@ -152,8 +134,8 @@ const translations = {
       reports: "التقارير",
       contact: "تواصل معنا",
       dataManager: "إدارة البيانات",
-      account: "إعدادات الحساب",
-      logout: "تسجيل الخروج",
+      account: "إعداد رمز الدخول",
+      logout: "قفل المنصة",
       cta: "ابدأ الآن",
     },
     hero: {
@@ -290,9 +272,12 @@ const translations = {
       },
       cases: {
         heading: "القضايا الإيجارية",
-        caption: "اربط القضايا بالعقار، حدّث التواريخ، المصاريف، وأعد حساب المطالبات فوراً.",
+        caption:
+          "اربط القضايا بالعقار، حدّث بيانات العقد والإيجار، التواريخ، المصاريف، وأعد حساب المطالبات فوراً.",
         number: "رقم القضية",
         property: "العقار المرتبط",
+        monthlyRent: "الإيجار الشهري (د.إ)",
+        contractStart: "بداية العقد المسجلة",
         status: "الحالة",
         tenantAr: "المستأجر (عربي)",
         tenantEn: "المستأجر (English)",
@@ -371,6 +356,10 @@ const translations = {
         propertyLabel: "العقار المرتبط",
         propertyPlaceholder: "اختر العقار المرتبط",
         propertyHint: "يتم تحميل بيانات المستأجر والعقد تلقائياً ويمكن تعديلها قبل الحفظ.",
+        monthlyRentLabel: "قيمة الإيجار الشهري (د.إ)",
+        monthlyRentPlaceholder: "مثل 5200",
+        contractStartLabel: "بداية العقد",
+        contractStartHint: "يُستخدم هذا التاريخ لحساب المتأخرات ويمكن تعديله قبل الحفظ.",
         statusLabel: "حالة القضية",
         status: {
           waiting: "بانتظار جلسة",
@@ -491,21 +480,17 @@ const translations = {
     },
     account: {
       close: "إغلاق",
-      title: "تحديث بيانات الدخول",
-      subtitle: "أدخل البيانات الحالية للتأكيد ثم اختر اسم مستخدم وكلمة مرور جديدة.",
-      currentUsername: "اسم المستخدم الحالي",
-      currentPassword: "كلمة المرور الحالية",
-      newUsername: "اسم المستخدم الجديد",
-      newPassword: "كلمة المرور الجديدة",
-      confirmPassword: "تأكيد كلمة المرور الجديدة",
-      submit: "حفظ التغييرات",
+      title: "تحديث رمز الدخول",
+      subtitle: "أدخل الرمز الحالي للتأكيد ثم اختر رمز وصول جديدًا.",
+      currentCode: "رمز الدخول الحالي",
+      newCode: "رمز الدخول الجديد",
+      confirmCode: "تأكيد رمز الدخول الجديد",
+      submit: "حفظ الرمز",
       feedback: {
-        credentialsInvalid: "البيانات الحالية غير مطابقة. تحقق وأعد المحاولة.",
-        usernameInvalid: "يرجى إدخال اسم مستخدم جديد صالح.",
-        passwordMismatch: "تأكيد كلمة المرور غير متطابق.",
-        passwordWeak:
-          "يجب أن تحتوي كلمة المرور على 10 أحرف على الأقل مع حروف كبيرة وصغيرة وأرقام ورمز خاص واحد على الأقل.",
-        updated: "تم تحديث بيانات الدخول بنجاح.",
+        codeInvalid: "الرمز الحالي غير صحيح. تحقق وأعد المحاولة.",
+        codeTooShort: "الرمز الجديد يجب أن يتكون من 4 أرقام على الأقل.",
+        codeMismatch: "تأكيد الرمز لا يطابق الرمز الجديد.",
+        updated: "تم تحديث رمز الدخول بنجاح.",
       },
     },
     scrollTop: "العودة للأعلى",
@@ -517,29 +502,10 @@ const translations = {
     language: {
       label: "Choose language",
     },
-    auth: {
-      title: "Sign in",
-      description: "Enter your credentials to access the management dashboard.",
-      usernameLabel: "Username",
-      usernamePlaceholder: "Enter username",
-      passwordLabel: "Password",
-      passwordPlaceholder: "Enter password",
-      submit: "Log in",
-      hint: "After signing in you can update the credentials from account settings.",
-      errorInvalid: "Incorrect username or password. Please try again.",
-      tagline: "An integrated platform to control portfolios, legal follow-ups, and financial analytics.",
-      highlightPortfolio: {
-        title: "Portfolio control",
-        body: "Manage properties, units, and financial performance indicators.",
-      },
-      highlightCases: {
-        title: "Rental cases",
-        body: "Track disputes, claims, and settlements in one place.",
-      },
-      highlightSecurity: {
-        title: "Enhanced security",
-        body: "Secure authentication with the ability to refresh credentials.",
-      },
+    access: {
+      prompt: "Enter the access code to view the platform (example: 11223344)",
+      error: "Incorrect access code. Please try again.",
+      cancelled: "Entry was cancelled. The platform remains locked until the correct code is provided.",
     },
     nav: {
       features: "Features",
@@ -548,8 +514,8 @@ const translations = {
       reports: "Reports",
       contact: "Contact",
       dataManager: "Data manager",
-      account: "Account settings",
-      logout: "Log out",
+      account: "Update access code",
+      logout: "Lock platform",
       cta: "Get started",
     },
     hero: {
@@ -687,9 +653,12 @@ const translations = {
       },
       cases: {
         heading: "Rental cases",
-        caption: "Link disputes to a property, adjust timelines and fees, and recalculate claims instantly.",
+        caption:
+          "Link disputes to a property, keep lease and rent data in sync, adjust timelines and fees, and recalculate claims instantly.",
         number: "Case number",
         property: "Linked property",
+        monthlyRent: "Monthly rent (AED)",
+        contractStart: "Recorded lease start",
         status: "Status",
         tenantAr: "Tenant (Arabic)",
         tenantEn: "Tenant (English)",
@@ -768,6 +737,10 @@ const translations = {
         propertyLabel: "Linked property",
         propertyPlaceholder: "Select a property",
         propertyHint: "Tenant and lease data load automatically but can be adjusted before saving.",
+        monthlyRentLabel: "Monthly rent (AED)",
+        monthlyRentPlaceholder: "e.g. 5200",
+        contractStartLabel: "Lease start date",
+        contractStartHint: "Used to calculate arrears and can be tweaked before saving.",
         statusLabel: "Case status",
         status: {
           waiting: "Awaiting hearing",
@@ -889,21 +862,17 @@ const translations = {
     },
     account: {
       close: "Close",
-      title: "Update credentials",
-      subtitle: "Enter the current details to confirm, then choose a new username and password.",
-      currentUsername: "Current username",
-      currentPassword: "Current password",
-      newUsername: "New username",
-      newPassword: "New password",
-      confirmPassword: "Confirm new password",
-      submit: "Save changes",
+      title: "Update access code",
+      subtitle: "Enter the current code to confirm, then choose a new access code.",
+      currentCode: "Current access code",
+      newCode: "New access code",
+      confirmCode: "Confirm new access code",
+      submit: "Save code",
       feedback: {
-        credentialsInvalid: "The current credentials do not match. Please try again.",
-        usernameInvalid: "Please enter a valid new username.",
-        passwordMismatch: "Password confirmation does not match.",
-        passwordWeak:
-          "Passwords must be at least 10 characters and include uppercase, lowercase, numbers, and a special symbol.",
-        updated: "Credentials updated successfully.",
+        codeInvalid: "The current code is incorrect. Please try again.",
+        codeTooShort: "The new code must be at least 4 characters long.",
+        codeMismatch: "Confirmation code does not match the new code.",
+        updated: "Access code updated successfully.",
       },
     },
     scrollTop: "Back to top",
@@ -1204,59 +1173,81 @@ languageControls.forEach((control) => {
   });
 });
 
-const loadCredentials = () => {
+const loadAccessSettings = () => {
   if (isStorageAvailable) {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
+    const stored = window.localStorage.getItem(ACCESS_STORAGE_KEY);
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
-        if (parsed?.username && parsed?.password) {
+        if (parsed?.code) {
           return parsed;
         }
       } catch (error) {
-        window.localStorage.removeItem(STORAGE_KEY);
+        window.localStorage.removeItem(ACCESS_STORAGE_KEY);
+      }
+    }
+
+    const legacyStored = window.localStorage.getItem(LEGACY_CREDENTIALS_KEY);
+    if (legacyStored) {
+      try {
+        const legacyParsed = JSON.parse(legacyStored);
+        if (legacyParsed?.password) {
+          const migrated = { code: String(legacyParsed.password) };
+          persistAccessSettings(migrated);
+          window.localStorage.removeItem(LEGACY_CREDENTIALS_KEY);
+          return migrated;
+        }
+      } catch (error) {
+        window.localStorage.removeItem(LEGACY_CREDENTIALS_KEY);
       }
     }
   }
 
-  return { ...DEFAULT_CREDENTIALS };
+  return { ...DEFAULT_ACCESS };
 };
 
-const persistCredentials = (credentials) => {
+const persistAccessSettings = (settings) => {
   if (!isStorageAvailable) {
     return;
   }
 
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(credentials));
+  window.localStorage.setItem(ACCESS_STORAGE_KEY, JSON.stringify(settings));
 };
 
-let activeCredentials = loadCredentials();
-
-const toggleAuthOverlay = (isVisible) => {
-  if (!authOverlay) {
-    return;
-  }
-
-  authOverlay.classList.toggle("overlay-hidden", !isVisible);
-  authOverlay.setAttribute("aria-hidden", String(!isVisible));
-
-  if (isVisible) {
-    loginForm?.reset();
-    if (loginError) {
-      loginError.textContent = "";
-    }
-    document.getElementById("login-username")?.focus();
-  }
-};
+let activeAccess = loadAccessSettings();
 
 const applyAuthState = (isAuthenticated) => {
   bodyElement.classList.toggle("authenticated", isAuthenticated);
 
-  if (isAuthenticated) {
-    toggleAuthOverlay(false);
-  } else {
-    toggleAuthOverlay(true);
+  if (!isAuthenticated) {
     accountModal?.classList.remove("open");
+    accountModal?.setAttribute("aria-hidden", "true");
+  }
+};
+
+const requestAccessCode = () => {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  if (bodyElement.classList.contains("authenticated")) {
+    return;
+  }
+
+  while (true) {
+    const input = window.prompt(translate("access.prompt"), "");
+
+    if (input === null) {
+      window.alert(translate("access.cancelled"));
+      continue;
+    }
+
+    if (input.trim() === activeAccess.code) {
+      applyAuthState(true);
+      break;
+    }
+
+    window.alert(translate("access.error"));
   }
 };
 
@@ -1272,7 +1263,7 @@ const showAccountModal = () => {
     credentialsMessage.textContent = "";
     credentialsMessage.className = "auth-feedback";
   }
-  document.getElementById("current-username")?.focus();
+  document.getElementById("current-access-code")?.focus();
 };
 
 const hideAccountModal = () => {
@@ -1319,11 +1310,6 @@ const setFeedbackMessage = (element, message, variant = "") => {
   element.className = `auth-feedback ${variant}`.trim();
 };
 
-const passwordIsComplex = (password) =>
-  /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{10,}/.test(password);
-
-toggleAuthOverlay(true);
-
 if (accountModal && !accountModal.hasAttribute("aria-hidden")) {
   accountModal.setAttribute("aria-hidden", "true");
 }
@@ -1332,25 +1318,10 @@ if (dataModal && !dataModal.hasAttribute("aria-hidden")) {
   dataModal.setAttribute("aria-hidden", "true");
 }
 
-loginForm?.addEventListener("submit", (event) => {
-  event.preventDefault();
-
-  const username = document.getElementById("login-username").value.trim();
-  const password = document.getElementById("login-password").value;
-
-  if (username === activeCredentials.username && password === activeCredentials.password) {
-    if (loginError) {
-      loginError.textContent = "";
-    }
-    applyAuthState(true);
-  } else if (loginError) {
-    loginError.textContent = translate("auth.errorInvalid");
-  }
-});
-
 logoutBtn?.addEventListener("click", () => {
   hideDataModal();
   applyAuthState(false);
+  requestAccessCode();
 });
 
 openAccountSettingsBtn?.addEventListener("click", showAccountModal);
@@ -1604,6 +1575,13 @@ const handleCasePropertyChange = () => {
   const property = owner.properties.find((prop) => prop.id === casePropertySelect.value);
   if (property) {
     applyPropertyToCaseForm(property);
+  } else {
+    if (caseMonthlyRentInput) {
+      caseMonthlyRentInput.value = "";
+    }
+    if (caseContractStartInput) {
+      caseContractStartInput.value = "";
+    }
   }
   updateCaseCreationCalculated();
 };
@@ -1615,6 +1593,13 @@ const handleCaseManagePropertyChange = () => {
   const property = owner.properties.find((prop) => prop.id === caseManagePropertySelect.value);
   if (property) {
     applyPropertyToCaseForm(property, { manage: true });
+  } else {
+    if (caseManageMonthlyRentInput) {
+      caseManageMonthlyRentInput.value = "";
+    }
+    if (caseManageContractStartInput) {
+      caseManageContractStartInput.value = "";
+    }
   }
   updateCaseManageCalculated();
 };
@@ -1624,44 +1609,43 @@ caseStopDateInput?.addEventListener("change", updateCaseCreationCalculated);
 caseStopDateInput?.addEventListener("input", updateCaseCreationCalculated);
 caseLegalFeesInput?.addEventListener("input", updateCaseCreationCalculated);
 caseOverrideAmountInput?.addEventListener("input", updateCaseCreationCalculated);
+caseMonthlyRentInput?.addEventListener("input", updateCaseCreationCalculated);
+caseContractStartInput?.addEventListener("change", updateCaseCreationCalculated);
+caseContractStartInput?.addEventListener("input", updateCaseCreationCalculated);
 
 caseManagePropertySelect?.addEventListener("change", handleCaseManagePropertyChange);
 caseManageStopDateInput?.addEventListener("change", updateCaseManageCalculated);
 caseManageStopDateInput?.addEventListener("input", updateCaseManageCalculated);
 caseManageLegalFeesInput?.addEventListener("input", updateCaseManageCalculated);
 caseManageOverrideInput?.addEventListener("input", updateCaseManageCalculated);
+caseManageMonthlyRentInput?.addEventListener("input", updateCaseManageCalculated);
+caseManageContractStartInput?.addEventListener("change", updateCaseManageCalculated);
+caseManageContractStartInput?.addEventListener("input", updateCaseManageCalculated);
 
 credentialsForm?.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  const currentUsername = document.getElementById("current-username").value.trim();
-  const currentPassword = document.getElementById("current-password").value;
-  const newUsername = document.getElementById("new-username").value.trim();
-  const newPassword = document.getElementById("new-password").value;
-  const confirmPassword = document.getElementById("confirm-password").value;
+  const currentCode = document.getElementById("current-access-code").value.trim();
+  const newCode = document.getElementById("new-access-code").value.trim();
+  const confirmCode = document.getElementById("confirm-access-code").value.trim();
 
-  if (currentUsername !== activeCredentials.username || currentPassword !== activeCredentials.password) {
-    setFeedbackMessage(credentialsMessage, translate("account.feedback.credentialsInvalid"), "error");
+  if (currentCode !== activeAccess.code) {
+    setFeedbackMessage(credentialsMessage, translate("account.feedback.codeInvalid"), "error");
     return;
   }
 
-  if (!newUsername) {
-    setFeedbackMessage(credentialsMessage, translate("account.feedback.usernameInvalid"), "error");
+  if (!newCode || newCode.length < 4) {
+    setFeedbackMessage(credentialsMessage, translate("account.feedback.codeTooShort"), "error");
     return;
   }
 
-  if (newPassword !== confirmPassword) {
-    setFeedbackMessage(credentialsMessage, translate("account.feedback.passwordMismatch"), "error");
+  if (newCode !== confirmCode) {
+    setFeedbackMessage(credentialsMessage, translate("account.feedback.codeMismatch"), "error");
     return;
   }
 
-  if (!passwordIsComplex(newPassword)) {
-    setFeedbackMessage(credentialsMessage, translate("account.feedback.passwordWeak"), "error");
-    return;
-  }
-
-  activeCredentials = { username: newUsername, password: newPassword };
-  persistCredentials(activeCredentials);
+  activeAccess = { code: newCode };
+  persistAccessSettings(activeAccess);
   setFeedbackMessage(credentialsMessage, translate("account.feedback.updated"), "success");
   credentialsForm.reset();
 });
@@ -1817,10 +1801,10 @@ const resolvePropertyContext = (owner, caseEntry) => {
     name: ensureLocalizedObject(property?.name ?? caseEntry.propertyName ?? { ar: "", en: "" }),
     tenant: ensureLocalizedObject(property?.tenant ?? caseEntry.tenant ?? { ar: "", en: "" }),
     tenantContact: property?.tenantContact ?? "",
-    contractStart: property?.contractStart || caseEntry.recordedContractStart || "",
+    contractStart: caseEntry.recordedContractStart || property?.contractStart || "",
     monthlyRent: sanitizeAmount(
-      property?.monthlyRent ??
-        caseEntry.recordedMonthlyRent ??
+      caseEntry.recordedMonthlyRent ??
+        property?.monthlyRent ??
         property?.monthlyRevenue ??
         caseEntry.monthlyRent ??
         0
@@ -1950,6 +1934,11 @@ const applyPropertyToCaseForm = (property, { manage = false } = {}) => {
   if (!property) return;
   const tenantAr = getTranslationValue(property.tenant, "ar");
   const tenantEn = getTranslationValue(property.tenant, "en");
+  const rentValue = sanitizeAmount(property?.monthlyRent ?? property?.monthlyRevenue ?? 0);
+  const contractStart = property?.contractStart ?? "";
+
+  const rentInput = manage ? caseManageMonthlyRentInput : caseMonthlyRentInput;
+  const contractInput = manage ? caseManageContractStartInput : caseContractStartInput;
 
   if (manage) {
     if (caseManageTenantArInput && tenantAr) {
@@ -1966,12 +1955,24 @@ const applyPropertyToCaseForm = (property, { manage = false } = {}) => {
       caseTenantEnInput.value = tenantEn;
     }
   }
+
+  if (rentInput) {
+    rentInput.value = rentValue ? String(rentValue) : "";
+  }
+
+  if (contractInput) {
+    contractInput.value = contractStart || "";
+  }
 };
 
 const buildCaseDraftFromCreationForm = (owner) => {
   const propertyId = casePropertySelect?.value ?? "";
   const property = owner?.properties?.find((prop) => prop.id === propertyId) ?? null;
   const overrideAmount = readOptionalAmountInput(caseOverrideAmountInput);
+  const manualRent = readOptionalAmountInput(caseMonthlyRentInput);
+  const recordedMonthlyRent =
+    manualRent !== null ? manualRent : property?.monthlyRent ?? property?.monthlyRevenue ?? 0;
+  const recordedContractStart = caseContractStartInput?.value?.trim() || property?.contractStart || "";
   return {
     number: caseNumberInput?.value.trim() ?? "",
     propertyId,
@@ -1988,8 +1989,8 @@ const buildCaseDraftFromCreationForm = (owner) => {
     stopDate: caseStopDateInput?.value ?? "",
     legalFees: readAmountInput(caseLegalFeesInput),
     overrideAmount,
-    recordedMonthlyRent: property?.monthlyRent ?? property?.monthlyRevenue ?? 0,
-    recordedContractStart: property?.contractStart ?? "",
+    recordedMonthlyRent,
+    recordedContractStart,
   };
 };
 
@@ -1998,6 +1999,11 @@ const buildCaseDraftFromManageForm = (owner) => {
   const property = owner?.properties?.find((prop) => prop.id === propertyId) ?? null;
   const label = caseManagePropertySelect?.selectedOptions?.[0]?.textContent ?? "";
   const overrideAmount = readOptionalAmountInput(caseManageOverrideInput);
+  const manualRent = readOptionalAmountInput(caseManageMonthlyRentInput);
+  const recordedMonthlyRent =
+    manualRent !== null ? manualRent : property?.monthlyRent ?? property?.monthlyRevenue ?? 0;
+  const recordedContractStart =
+    caseManageContractStartInput?.value?.trim() || property?.contractStart || "";
   return {
     number: caseManageNumberInput?.value.trim() ?? "",
     propertyId,
@@ -2014,8 +2020,8 @@ const buildCaseDraftFromManageForm = (owner) => {
     stopDate: caseManageStopDateInput?.value ?? "",
     legalFees: readAmountInput(caseManageLegalFeesInput),
     overrideAmount,
-    recordedMonthlyRent: property?.monthlyRent ?? property?.monthlyRevenue ?? 0,
-    recordedContractStart: property?.contractStart ?? "",
+    recordedMonthlyRent,
+    recordedContractStart,
   };
 };
 
@@ -2989,6 +2995,7 @@ const handleCaseAction = (action, index) => {
   if (action === "edit-case") {
     const entry = owner.cases[index];
     if (!entry) return;
+    const property = owner.properties.find((prop) => prop.id === entry.propertyId) ?? null;
 
     showDataModal(() => {
       resetCaseFormFields();
@@ -3010,6 +3017,9 @@ const handleCaseAction = (action, index) => {
       if (caseManagePropertySelect && entry.propertyId) {
         caseManagePropertySelect.value = entry.propertyId;
       }
+      if (property) {
+        applyPropertyToCaseForm(property, { manage: true });
+      }
       if (caseManageStopDateInput) {
         caseManageStopDateInput.value = entry.stopDate ?? "";
       }
@@ -3018,6 +3028,15 @@ const handleCaseAction = (action, index) => {
       }
       if (caseManageOverrideInput) {
         caseManageOverrideInput.value = entry.overrideAmount ?? "";
+      }
+      if (caseManageMonthlyRentInput) {
+        caseManageMonthlyRentInput.value =
+          entry.recordedMonthlyRent !== null && entry.recordedMonthlyRent !== undefined
+            ? entry.recordedMonthlyRent
+            : "";
+      }
+      if (caseManageContractStartInput) {
+        caseManageContractStartInput.value = entry.recordedContractStart ?? "";
       }
       if (caseManageTenantArInput) {
         caseManageTenantArInput.value = getTranslationValue(entry.tenant, "ar");
@@ -3208,6 +3227,8 @@ if (hero) {
 }
 
 applyTranslations();
+applyAuthState(false);
+requestAccessCode();
 updateCaseCreationCalculated();
 updateCaseManageCalculated();
 
