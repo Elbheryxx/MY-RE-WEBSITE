@@ -13,6 +13,8 @@ const caseStopDateInput = document.getElementById("case-stop-date");
 const caseLegalFeesInput = document.getElementById("case-legal-fees");
 const caseOverrideAmountInput = document.getElementById("case-override-amount");
 const caseCalculatedAmount = document.getElementById("case-calculated-amount");
+const caseMonthlyRentInput = document.getElementById("case-monthly-rent");
+const caseContractStartInput = document.getElementById("case-contract-start");
 const caseTenantArInput = document.getElementById("case-tenant-ar");
 const caseTenantEnInput = document.getElementById("case-tenant-en");
 const caseActionArInput = document.getElementById("case-action-ar");
@@ -83,6 +85,8 @@ const caseManageStopDateInput = document.getElementById("case-manage-stop-date")
 const caseManageLegalFeesInput = document.getElementById("case-manage-legal-fees");
 const caseManageOverrideInput = document.getElementById("case-manage-override");
 const caseManageCalculated = document.getElementById("case-manage-calculated");
+const caseManageMonthlyRentInput = document.getElementById("case-manage-monthly-rent");
+const caseManageContractStartInput = document.getElementById("case-manage-contract-start");
 const caseManageTenantArInput = document.getElementById("case-manage-tenant-ar");
 const caseManageTenantEnInput = document.getElementById("case-manage-tenant-en");
 const caseManageActionArInput = document.getElementById("case-manage-action-ar");
@@ -268,9 +272,12 @@ const translations = {
       },
       cases: {
         heading: "القضايا الإيجارية",
-        caption: "اربط القضايا بالعقار، حدّث التواريخ، المصاريف، وأعد حساب المطالبات فوراً.",
+        caption:
+          "اربط القضايا بالعقار، حدّث بيانات العقد والإيجار، التواريخ، المصاريف، وأعد حساب المطالبات فوراً.",
         number: "رقم القضية",
         property: "العقار المرتبط",
+        monthlyRent: "الإيجار الشهري (د.إ)",
+        contractStart: "بداية العقد المسجلة",
         status: "الحالة",
         tenantAr: "المستأجر (عربي)",
         tenantEn: "المستأجر (English)",
@@ -349,6 +356,10 @@ const translations = {
         propertyLabel: "العقار المرتبط",
         propertyPlaceholder: "اختر العقار المرتبط",
         propertyHint: "يتم تحميل بيانات المستأجر والعقد تلقائياً ويمكن تعديلها قبل الحفظ.",
+        monthlyRentLabel: "قيمة الإيجار الشهري (د.إ)",
+        monthlyRentPlaceholder: "مثل 5200",
+        contractStartLabel: "بداية العقد",
+        contractStartHint: "يُستخدم هذا التاريخ لحساب المتأخرات ويمكن تعديله قبل الحفظ.",
         statusLabel: "حالة القضية",
         status: {
           waiting: "بانتظار جلسة",
@@ -642,9 +653,12 @@ const translations = {
       },
       cases: {
         heading: "Rental cases",
-        caption: "Link disputes to a property, adjust timelines and fees, and recalculate claims instantly.",
+        caption:
+          "Link disputes to a property, keep lease and rent data in sync, adjust timelines and fees, and recalculate claims instantly.",
         number: "Case number",
         property: "Linked property",
+        monthlyRent: "Monthly rent (AED)",
+        contractStart: "Recorded lease start",
         status: "Status",
         tenantAr: "Tenant (Arabic)",
         tenantEn: "Tenant (English)",
@@ -723,6 +737,10 @@ const translations = {
         propertyLabel: "Linked property",
         propertyPlaceholder: "Select a property",
         propertyHint: "Tenant and lease data load automatically but can be adjusted before saving.",
+        monthlyRentLabel: "Monthly rent (AED)",
+        monthlyRentPlaceholder: "e.g. 5200",
+        contractStartLabel: "Lease start date",
+        contractStartHint: "Used to calculate arrears and can be tweaked before saving.",
         statusLabel: "Case status",
         status: {
           waiting: "Awaiting hearing",
@@ -1557,6 +1575,13 @@ const handleCasePropertyChange = () => {
   const property = owner.properties.find((prop) => prop.id === casePropertySelect.value);
   if (property) {
     applyPropertyToCaseForm(property);
+  } else {
+    if (caseMonthlyRentInput) {
+      caseMonthlyRentInput.value = "";
+    }
+    if (caseContractStartInput) {
+      caseContractStartInput.value = "";
+    }
   }
   updateCaseCreationCalculated();
 };
@@ -1568,6 +1593,13 @@ const handleCaseManagePropertyChange = () => {
   const property = owner.properties.find((prop) => prop.id === caseManagePropertySelect.value);
   if (property) {
     applyPropertyToCaseForm(property, { manage: true });
+  } else {
+    if (caseManageMonthlyRentInput) {
+      caseManageMonthlyRentInput.value = "";
+    }
+    if (caseManageContractStartInput) {
+      caseManageContractStartInput.value = "";
+    }
   }
   updateCaseManageCalculated();
 };
@@ -1577,12 +1609,18 @@ caseStopDateInput?.addEventListener("change", updateCaseCreationCalculated);
 caseStopDateInput?.addEventListener("input", updateCaseCreationCalculated);
 caseLegalFeesInput?.addEventListener("input", updateCaseCreationCalculated);
 caseOverrideAmountInput?.addEventListener("input", updateCaseCreationCalculated);
+caseMonthlyRentInput?.addEventListener("input", updateCaseCreationCalculated);
+caseContractStartInput?.addEventListener("change", updateCaseCreationCalculated);
+caseContractStartInput?.addEventListener("input", updateCaseCreationCalculated);
 
 caseManagePropertySelect?.addEventListener("change", handleCaseManagePropertyChange);
 caseManageStopDateInput?.addEventListener("change", updateCaseManageCalculated);
 caseManageStopDateInput?.addEventListener("input", updateCaseManageCalculated);
 caseManageLegalFeesInput?.addEventListener("input", updateCaseManageCalculated);
 caseManageOverrideInput?.addEventListener("input", updateCaseManageCalculated);
+caseManageMonthlyRentInput?.addEventListener("input", updateCaseManageCalculated);
+caseManageContractStartInput?.addEventListener("change", updateCaseManageCalculated);
+caseManageContractStartInput?.addEventListener("input", updateCaseManageCalculated);
 
 credentialsForm?.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -1763,10 +1801,10 @@ const resolvePropertyContext = (owner, caseEntry) => {
     name: ensureLocalizedObject(property?.name ?? caseEntry.propertyName ?? { ar: "", en: "" }),
     tenant: ensureLocalizedObject(property?.tenant ?? caseEntry.tenant ?? { ar: "", en: "" }),
     tenantContact: property?.tenantContact ?? "",
-    contractStart: property?.contractStart || caseEntry.recordedContractStart || "",
+    contractStart: caseEntry.recordedContractStart || property?.contractStart || "",
     monthlyRent: sanitizeAmount(
-      property?.monthlyRent ??
-        caseEntry.recordedMonthlyRent ??
+      caseEntry.recordedMonthlyRent ??
+        property?.monthlyRent ??
         property?.monthlyRevenue ??
         caseEntry.monthlyRent ??
         0
@@ -1896,6 +1934,11 @@ const applyPropertyToCaseForm = (property, { manage = false } = {}) => {
   if (!property) return;
   const tenantAr = getTranslationValue(property.tenant, "ar");
   const tenantEn = getTranslationValue(property.tenant, "en");
+  const rentValue = sanitizeAmount(property?.monthlyRent ?? property?.monthlyRevenue ?? 0);
+  const contractStart = property?.contractStart ?? "";
+
+  const rentInput = manage ? caseManageMonthlyRentInput : caseMonthlyRentInput;
+  const contractInput = manage ? caseManageContractStartInput : caseContractStartInput;
 
   if (manage) {
     if (caseManageTenantArInput && tenantAr) {
@@ -1912,12 +1955,24 @@ const applyPropertyToCaseForm = (property, { manage = false } = {}) => {
       caseTenantEnInput.value = tenantEn;
     }
   }
+
+  if (rentInput) {
+    rentInput.value = rentValue ? String(rentValue) : "";
+  }
+
+  if (contractInput) {
+    contractInput.value = contractStart || "";
+  }
 };
 
 const buildCaseDraftFromCreationForm = (owner) => {
   const propertyId = casePropertySelect?.value ?? "";
   const property = owner?.properties?.find((prop) => prop.id === propertyId) ?? null;
   const overrideAmount = readOptionalAmountInput(caseOverrideAmountInput);
+  const manualRent = readOptionalAmountInput(caseMonthlyRentInput);
+  const recordedMonthlyRent =
+    manualRent !== null ? manualRent : property?.monthlyRent ?? property?.monthlyRevenue ?? 0;
+  const recordedContractStart = caseContractStartInput?.value?.trim() || property?.contractStart || "";
   return {
     number: caseNumberInput?.value.trim() ?? "",
     propertyId,
@@ -1934,8 +1989,8 @@ const buildCaseDraftFromCreationForm = (owner) => {
     stopDate: caseStopDateInput?.value ?? "",
     legalFees: readAmountInput(caseLegalFeesInput),
     overrideAmount,
-    recordedMonthlyRent: property?.monthlyRent ?? property?.monthlyRevenue ?? 0,
-    recordedContractStart: property?.contractStart ?? "",
+    recordedMonthlyRent,
+    recordedContractStart,
   };
 };
 
@@ -1944,6 +1999,11 @@ const buildCaseDraftFromManageForm = (owner) => {
   const property = owner?.properties?.find((prop) => prop.id === propertyId) ?? null;
   const label = caseManagePropertySelect?.selectedOptions?.[0]?.textContent ?? "";
   const overrideAmount = readOptionalAmountInput(caseManageOverrideInput);
+  const manualRent = readOptionalAmountInput(caseManageMonthlyRentInput);
+  const recordedMonthlyRent =
+    manualRent !== null ? manualRent : property?.monthlyRent ?? property?.monthlyRevenue ?? 0;
+  const recordedContractStart =
+    caseManageContractStartInput?.value?.trim() || property?.contractStart || "";
   return {
     number: caseManageNumberInput?.value.trim() ?? "",
     propertyId,
@@ -1960,8 +2020,8 @@ const buildCaseDraftFromManageForm = (owner) => {
     stopDate: caseManageStopDateInput?.value ?? "",
     legalFees: readAmountInput(caseManageLegalFeesInput),
     overrideAmount,
-    recordedMonthlyRent: property?.monthlyRent ?? property?.monthlyRevenue ?? 0,
-    recordedContractStart: property?.contractStart ?? "",
+    recordedMonthlyRent,
+    recordedContractStart,
   };
 };
 
@@ -2935,6 +2995,7 @@ const handleCaseAction = (action, index) => {
   if (action === "edit-case") {
     const entry = owner.cases[index];
     if (!entry) return;
+    const property = owner.properties.find((prop) => prop.id === entry.propertyId) ?? null;
 
     showDataModal(() => {
       resetCaseFormFields();
@@ -2956,6 +3017,9 @@ const handleCaseAction = (action, index) => {
       if (caseManagePropertySelect && entry.propertyId) {
         caseManagePropertySelect.value = entry.propertyId;
       }
+      if (property) {
+        applyPropertyToCaseForm(property, { manage: true });
+      }
       if (caseManageStopDateInput) {
         caseManageStopDateInput.value = entry.stopDate ?? "";
       }
@@ -2964,6 +3028,15 @@ const handleCaseAction = (action, index) => {
       }
       if (caseManageOverrideInput) {
         caseManageOverrideInput.value = entry.overrideAmount ?? "";
+      }
+      if (caseManageMonthlyRentInput) {
+        caseManageMonthlyRentInput.value =
+          entry.recordedMonthlyRent !== null && entry.recordedMonthlyRent !== undefined
+            ? entry.recordedMonthlyRent
+            : "";
+      }
+      if (caseManageContractStartInput) {
+        caseManageContractStartInput.value = entry.recordedContractStart ?? "";
       }
       if (caseManageTenantArInput) {
         caseManageTenantArInput.value = getTranslationValue(entry.tenant, "ar");
