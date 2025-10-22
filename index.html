@@ -22,7 +22,7 @@
       aria-describedby="auth-description"
     >
       <div class="auth-card">
-        <div class="auth-card-header">
+        <div class="auth-card-visual">
           <div class="auth-logo" aria-label="Mohamed UAQ Realestates">
             <div class="brand-emblem" aria-hidden="true">
               <svg viewBox="0 0 64 64" role="presentation">
@@ -45,49 +45,72 @@
               <span class="brand-subtitle">Realestates</span>
             </div>
           </div>
-          <div class="language-switcher">
-            <label class="visually-hidden" for="language-select-auth" data-i18n="language.label"
-              >اختر اللغة</label
-            >
-            <select id="language-select-auth" class="language-select" data-language-control>
-              <option value="ar">العربية</option>
-              <option value="en">English</option>
-            </select>
-          </div>
+          <p class="auth-tagline" data-i18n="auth.tagline">
+            منصة متكاملة للملاك لإدارة المحافظ، المتابعة القانونية، والتحليلات المالية.
+          </p>
+          <ul class="auth-highlights">
+            <li>
+              <strong data-i18n="auth.highlightPortfolio.title">إدارة المحافظ</strong>
+              <span data-i18n="auth.highlightPortfolio.body">تحكم في العقارات والوحدات والمؤشرات المالية.</span>
+            </li>
+            <li>
+              <strong data-i18n="auth.highlightCases.title">القضايا الإيجارية</strong>
+              <span data-i18n="auth.highlightCases.body">تابع القضايا والمطالبات والتسويات في لوحة واحدة.</span>
+            </li>
+            <li>
+              <strong data-i18n="auth.highlightSecurity.title">حماية متقدمة</strong>
+              <span data-i18n="auth.highlightSecurity.body">مصادقة آمنة مع إمكانية تحديث بيانات الدخول.</span>
+            </li>
+          </ul>
         </div>
-        <h1 id="auth-title" data-i18n="auth.title">تسجيل الدخول</h1>
-        <p id="auth-description" class="auth-subtitle" data-i18n="auth.description">
-          يرجى إدخال بيانات الاعتماد الخاصة بك للوصول إلى لوحة التحكم.
-        </p>
-        <form id="login-form" class="auth-form">
-          <div class="form-group">
-            <label for="login-username" data-i18n="auth.usernameLabel">اسم المستخدم</label>
-            <input
-              id="login-username"
-              type="text"
-              autocomplete="username"
-              required
-              data-i18n-placeholder="auth.usernamePlaceholder"
-            />
+        <div class="auth-card-form">
+          <div class="auth-form-header">
+            <div class="auth-form-copy">
+              <h1 id="auth-title" data-i18n="auth.title">تسجيل الدخول</h1>
+              <p id="auth-description" class="auth-subtitle" data-i18n="auth.description">
+                يرجى إدخال بيانات الاعتماد الخاصة بك للوصول إلى لوحة التحكم.
+              </p>
+            </div>
+            <div class="language-switcher">
+              <label class="visually-hidden" for="language-select-auth" data-i18n="language.label"
+                >اختر اللغة</label
+              >
+              <select id="language-select-auth" class="language-select" data-language-control>
+                <option value="ar">العربية</option>
+                <option value="en">English</option>
+              </select>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="login-password" data-i18n="auth.passwordLabel">كلمة المرور</label>
-            <input
-              id="login-password"
-              type="password"
-              autocomplete="current-password"
-              required
-              data-i18n-placeholder="auth.passwordPlaceholder"
-            />
-          </div>
-          <button type="submit" class="primary-btn full" data-i18n="auth.submit">
-            دخول
-          </button>
-          <p id="login-error" class="auth-error" role="alert" aria-live="assertive"></p>
-        </form>
-        <p class="auth-hint" data-i18n="auth.hint">
-          بعد تسجيل الدخول يمكنك تحديث بيانات الدخول من إعدادات الحساب.
-        </p>
+          <form id="login-form" class="auth-form">
+            <div class="form-group">
+              <label for="login-username" data-i18n="auth.usernameLabel">اسم المستخدم</label>
+              <input
+                id="login-username"
+                type="text"
+                autocomplete="username"
+                required
+                data-i18n-placeholder="auth.usernamePlaceholder"
+              />
+            </div>
+            <div class="form-group">
+              <label for="login-password" data-i18n="auth.passwordLabel">كلمة المرور</label>
+              <input
+                id="login-password"
+                type="password"
+                autocomplete="current-password"
+                required
+                data-i18n-placeholder="auth.passwordPlaceholder"
+              />
+            </div>
+            <button type="submit" class="primary-btn full" data-i18n="auth.submit">
+              دخول
+            </button>
+            <p id="login-error" class="auth-error" role="alert" aria-live="assertive"></p>
+          </form>
+          <p class="auth-hint" data-i18n="auth.hint">
+            بعد تسجيل الدخول يمكنك تحديث بيانات الدخول من إعدادات الحساب.
+          </p>
+        </div>
       </div>
     </div>
 
@@ -132,6 +155,9 @@
               <option value="en">English</option>
             </select>
           </div>
+          <button class="secondary-btn" id="open-data-manager" data-i18n="nav.dataManager">
+            إدارة البيانات
+          </button>
           <button class="secondary-btn" id="open-account-settings" data-i18n="nav.account">
             إعدادات الحساب
           </button>
@@ -244,8 +270,18 @@
         <div class="dashboard-content">
           <div class="dashboard-card">
             <header>
-              <h3 data-i18n="dashboard.portfolio.title">حافظة العقارات</h3>
-              <span class="status-pill success" id="occupancy-pill">نسبة الإشغال 75%</span>
+              <div class="card-heading">
+                <h3 data-i18n="dashboard.portfolio.title">حافظة العقارات</h3>
+                <span class="status-pill success" id="occupancy-pill">نسبة الإشغال 75%</span>
+              </div>
+              <button
+                class="mini-action-btn"
+                id="manage-properties-btn"
+                type="button"
+                data-i18n="dashboard.portfolio.manageButton"
+              >
+                إدارة الحافظة
+              </button>
             </header>
             <div class="table-wrapper">
               <table>
@@ -255,6 +291,7 @@
                     <th data-i18n="dashboard.portfolio.headers.units">الوحدات</th>
                     <th data-i18n="dashboard.portfolio.headers.leased">المؤجر</th>
                     <th data-i18n="dashboard.portfolio.headers.revenue">إيراد شهري</th>
+                    <th class="table-actions" data-i18n="dashboard.portfolio.headers.manage">إدارة</th>
                   </tr>
                 </thead>
                 <tbody id="portfolio-body"></tbody>
@@ -264,8 +301,18 @@
 
           <div class="dashboard-card">
             <header>
-              <h3 data-i18n="dashboard.ledger.title">دفتر الأستاذ</h3>
-              <span class="status-pill" data-i18n="dashboard.ledger.updated">آخر تحديث اليوم</span>
+              <div class="card-heading">
+                <h3 data-i18n="dashboard.ledger.title">دفتر الأستاذ</h3>
+                <span class="status-pill" data-i18n="dashboard.ledger.updated">آخر تحديث اليوم</span>
+              </div>
+              <button
+                class="mini-action-btn"
+                id="manage-ledger-btn"
+                type="button"
+                data-i18n="dashboard.ledger.manageButton"
+              >
+                إدارة القيود
+              </button>
             </header>
             <div class="ledger">
               <div id="ledger-items"></div>
@@ -284,15 +331,27 @@
                     <option value="expense" data-i18n="forms.transaction.type.expense">مصروف</option>
                   </select>
                 </div>
-                <div class="form-group">
-                  <label for="transaction-desc" data-i18n="forms.transaction.descLabel">الوصف</label>
-                  <input
-                    id="transaction-desc"
-                    type="text"
-                    required
-                    data-i18n-placeholder="forms.transaction.descPlaceholder"
-                    placeholder="مثل: إيجار شقة 204"
-                  />
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="transaction-desc-ar" data-i18n="forms.transaction.descLabelAr">الوصف (عربي)</label>
+                    <input
+                      id="transaction-desc-ar"
+                      type="text"
+                      required
+                      data-i18n-placeholder="forms.transaction.descPlaceholderAr"
+                      placeholder="مثل: إيجار شقة 204"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="transaction-desc-en" data-i18n="forms.transaction.descLabelEn">الوصف (English)</label>
+                    <input
+                      id="transaction-desc-en"
+                      type="text"
+                      required
+                      data-i18n-placeholder="forms.transaction.descPlaceholderEn"
+                      placeholder="e.g. Rent Apartment 204"
+                    />
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="transaction-amount" data-i18n="forms.transaction.amountLabel">المبلغ (د.إ)</label>
@@ -352,18 +411,30 @@
           <div class="cases-board">
             <div class="board-card">
               <header>
-                <h3 data-i18n="cases.board.title">سجل القضايا النشطة</h3>
-                <span class="status-pill" id="case-board-update">—</span>
+                <div class="card-heading">
+                  <h3 data-i18n="cases.board.title">سجل القضايا النشطة</h3>
+                  <span class="status-pill" id="case-board-update">—</span>
+                </div>
+                <button
+                  class="mini-action-btn"
+                  id="manage-cases-btn"
+                  type="button"
+                  data-i18n="cases.board.manageButton"
+                >
+                  إدارة القضايا
+                </button>
               </header>
               <div class="table-wrapper">
                 <table>
                   <thead>
                     <tr>
                       <th data-i18n="cases.board.headers.number">رقم القضية</th>
+                      <th data-i18n="cases.board.headers.property">العقار</th>
                       <th data-i18n="cases.board.headers.tenant">المستأجر</th>
                       <th data-i18n="cases.board.headers.status">الحالة</th>
                       <th data-i18n="cases.board.headers.action">آخر إجراء</th>
                       <th data-i18n="cases.board.headers.amount">قيمة المطالبة</th>
+                      <th class="table-actions" data-i18n="cases.board.headers.manage">إدارة</th>
                     </tr>
                   </thead>
                   <tbody id="case-table-body"></tbody>
@@ -420,37 +491,91 @@
                 />
               </div>
               <div class="form-group">
-                <label for="case-tenant" data-i18n="cases.form.tenantLabel">اسم المستأجر</label>
-                <input
-                  id="case-tenant"
-                  type="text"
-                  required
-                  placeholder="اسم المستأجر"
-                  data-i18n-placeholder="cases.form.tenantPlaceholder"
-                />
+                <label for="case-property" data-i18n="cases.form.propertyLabel">العقار المرتبط</label>
+                <select id="case-property" required></select>
+                <p class="form-hint" data-i18n="cases.form.propertyHint">
+                  يتم تحميل بيانات المستأجر والعقد تلقائياً ويمكن تعديلها قبل الحفظ.
+                </p>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="case-tenant-ar" data-i18n="cases.form.tenantLabelAr">اسم المستأجر (عربي)</label>
+                  <input
+                    id="case-tenant-ar"
+                    type="text"
+                    required
+                    placeholder="اسم المستأجر"
+                    data-i18n-placeholder="cases.form.tenantPlaceholderAr"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="case-tenant-en" data-i18n="cases.form.tenantLabelEn">اسم المستأجر (English)</label>
+                  <input
+                    id="case-tenant-en"
+                    type="text"
+                    required
+                    placeholder="Tenant name"
+                    data-i18n-placeholder="cases.form.tenantPlaceholderEn"
+                  />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="case-stop-date" data-i18n="cases.form.stopDateLabel">تاريخ توقف السداد</label>
+                  <input id="case-stop-date" type="date" required />
+                </div>
+                <div class="form-group">
+                  <label for="case-status" data-i18n="cases.form.statusLabel">حالة القضية</label>
+                  <select id="case-status" required>
+                    <option value="warning" data-i18n="cases.form.status.waiting">بانتظار جلسة</option>
+                    <option value="info" data-i18n="cases.form.status.negotiation">تفاوض</option>
+                    <option value="success" data-i18n="cases.form.status.judgement">حكم ابتدائي</option>
+                    <option value="danger" data-i18n="cases.form.status.execution">تنفيذ</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="case-action-ar" data-i18n="cases.form.actionLabelAr">آخر إجراء (عربي)</label>
+                  <input
+                    id="case-action-ar"
+                    type="text"
+                    required
+                    placeholder="مثل: إرسال إنذار بالدفع"
+                    data-i18n-placeholder="cases.form.actionPlaceholderAr"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="case-action-en" data-i18n="cases.form.actionLabelEn">آخر إجراء (English)</label>
+                  <input
+                    id="case-action-en"
+                    type="text"
+                    required
+                    placeholder="e.g. Payment notice issued"
+                    data-i18n-placeholder="cases.form.actionPlaceholderEn"
+                  />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="case-legal-fees" data-i18n="cases.form.legalFeesLabel">مصاريف القضية (د.إ)</label>
+                  <input id="case-legal-fees" type="number" min="0" step="0.01" value="0" />
+                </div>
+                <div class="form-group">
+                  <label for="case-override-amount" data-i18n="cases.form.overrideLabel">تعديل يدوي للمطالبة</label>
+                  <input
+                    id="case-override-amount"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder=""
+                    data-i18n-placeholder="cases.form.overridePlaceholder"
+                  />
+                </div>
               </div>
               <div class="form-group">
-                <label for="case-status" data-i18n="cases.form.statusLabel">حالة القضية</label>
-                <select id="case-status" required>
-                  <option value="warning" data-i18n="cases.form.status.waiting">بانتظار جلسة</option>
-                  <option value="info" data-i18n="cases.form.status.negotiation">تفاوض</option>
-                  <option value="success" data-i18n="cases.form.status.judgement">حكم ابتدائي</option>
-                  <option value="danger" data-i18n="cases.form.status.execution">تنفيذ</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="case-action" data-i18n="cases.form.actionLabel">آخر إجراء</label>
-                <input
-                  id="case-action"
-                  type="text"
-                  required
-                  placeholder="مثل: إرسال إنذار بالدفع"
-                  data-i18n-placeholder="cases.form.actionPlaceholder"
-                />
-              </div>
-              <div class="form-group">
-                <label for="case-amount" data-i18n="cases.form.amountLabel">قيمة المطالبة (د.إ)</label>
-                <input id="case-amount" type="number" min="1" step="0.01" required />
+                <label data-i18n="cases.form.autoAmount">القيمة المحسوبة تلقائياً</label>
+                <div class="calculated-amount" id="case-calculated-amount">—</div>
               </div>
               <button type="submit" class="primary-btn full" data-i18n="cases.form.submit">
                 إضافة القضية
@@ -598,6 +723,257 @@
         </div>
       </div>
     </footer>
+
+    <div
+      id="data-modal"
+      class="account-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="data-modal-title"
+    >
+      <div class="modal-content data-modal-content">
+        <button class="modal-close" id="close-data-modal" aria-label="إغلاق" data-i18n-aria-label="data.close">
+          ×
+        </button>
+        <h3 id="data-modal-title" data-i18n="data.title">إدارة بيانات المالك</h3>
+        <p class="modal-subtitle" data-i18n="data.subtitle">
+          عدل ملخص المالك، الحافظة، دفتر الأستاذ، وسجل القضايا بشكل فوري حسب المالك الحالي.
+        </p>
+        <div class="data-modal-body">
+          <section class="data-section">
+            <header>
+              <h4 data-i18n="data.summary.heading">تعديل الملخص المالي</h4>
+              <p data-i18n="data.summary.caption">حدث الأرقام الأساسية للوحدات والإيرادات والتكاليف.</p>
+            </header>
+            <form id="summary-form" class="stack-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="summary-total-units" data-i18n="data.summary.totalUnits">إجمالي الوحدات</label>
+                  <input id="summary-total-units" type="number" min="0" required />
+                </div>
+                <div class="form-group">
+                  <label for="summary-occupied-units" data-i18n="data.summary.occupiedUnits">الوحدات المؤجرة</label>
+                  <input id="summary-occupied-units" type="number" min="0" required />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="summary-revenue" data-i18n="data.summary.revenue">الإيرادات الشهرية (د.إ)</label>
+                  <input id="summary-revenue" type="number" min="0" step="0.01" required />
+                </div>
+                <div class="form-group">
+                  <label for="summary-overdue" data-i18n="data.summary.overdue">المتأخرات (د.إ)</label>
+                  <input id="summary-overdue" type="number" min="0" step="0.01" required />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="summary-profit" data-i18n="data.summary.profit">صافي الربح (د.إ)</label>
+                  <input id="summary-profit" type="number" step="0.01" required />
+                </div>
+                <div class="form-group">
+                  <label for="summary-maintenance" data-i18n="data.summary.maintenance">تكاليف الصيانة (د.إ)</label>
+                  <input id="summary-maintenance" type="number" min="0" step="0.01" required />
+                </div>
+              </div>
+              <div class="form-actions-inline">
+                <button type="submit" class="primary-btn" data-i18n="data.summary.save">حفظ الملخص</button>
+                <button type="button" class="ghost-btn" data-reset-summary data-i18n="data.actions.reset">
+                  إلغاء التعديلات
+                </button>
+              </div>
+            </form>
+          </section>
+
+          <section class="data-section">
+            <header>
+              <h4 data-i18n="data.properties.heading">حافظة العقارات</h4>
+              <p data-i18n="data.properties.caption">أضف أو عدل العقارات وأعداد الوحدات والعائد الشهري.</p>
+            </header>
+            <form id="property-form" class="stack-form">
+              <input type="hidden" id="property-index" value="-1" />
+              <input type="hidden" id="property-id" value="" />
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="property-name-ar" data-i18n="data.properties.nameAr">اسم العقار (عربي)</label>
+                  <input id="property-name-ar" type="text" required />
+                </div>
+                <div class="form-group">
+                  <label for="property-name-en" data-i18n="data.properties.nameEn">اسم العقار (English)</label>
+                  <input id="property-name-en" type="text" required />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="property-total" data-i18n="data.properties.totalUnits">إجمالي الوحدات</label>
+                  <input id="property-total" type="number" min="0" required />
+                </div>
+                <div class="form-group">
+                  <label for="property-leased" data-i18n="data.properties.leasedUnits">الوحدات المؤجرة</label>
+                  <input id="property-leased" type="number" min="0" required />
+                </div>
+                <div class="form-group">
+                  <label for="property-revenue" data-i18n="data.properties.revenue">الإيراد الشهري (د.إ)</label>
+                  <input id="property-revenue" type="number" min="0" step="0.01" required />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="property-tenant-ar" data-i18n="data.properties.tenantAr">المستأجر الحالي (عربي)</label>
+                  <input id="property-tenant-ar" type="text" />
+                </div>
+                <div class="form-group">
+                  <label for="property-tenant-en" data-i18n="data.properties.tenantEn">المستأجر الحالي (English)</label>
+                  <input id="property-tenant-en" type="text" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="property-contract-start" data-i18n="data.properties.contractStart">بداية العقد</label>
+                  <input id="property-contract-start" type="date" />
+                </div>
+                <div class="form-group">
+                  <label for="property-monthly-rent" data-i18n="data.properties.monthlyRent">قيمة الإيجار الشهري (د.إ)</label>
+                  <input id="property-monthly-rent" type="number" min="0" step="0.01" />
+                </div>
+                <div class="form-group">
+                  <label for="property-tenant-contact" data-i18n="data.properties.tenantContact">رقم/بريد المستأجر</label>
+                  <input id="property-tenant-contact" type="text" />
+                </div>
+              </div>
+              <div class="form-actions-inline">
+                <button type="submit" class="primary-btn" data-i18n="data.properties.save">حفظ العقار</button>
+                <button type="button" class="ghost-btn" data-reset-property data-i18n="data.actions.reset">
+                  إلغاء التعديلات
+                </button>
+              </div>
+            </form>
+            <ul id="property-list" class="data-list" aria-live="polite"></ul>
+          </section>
+
+          <section class="data-section">
+            <header>
+              <h4 data-i18n="data.ledger.heading">دفتر الأستاذ</h4>
+              <p data-i18n="data.ledger.caption">تحكم في القيود المالية، نوع الحركة، والقيمة لكل معاملة.</p>
+            </header>
+            <form id="ledger-manage-form" class="stack-form">
+              <input type="hidden" id="ledger-index" value="-1" />
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="ledger-type" data-i18n="data.ledger.type">النوع</label>
+                  <select id="ledger-type" required>
+                    <option value="income" data-i18n="forms.transaction.type.income">إيراد</option>
+                    <option value="expense" data-i18n="forms.transaction.type.expense">مصروف</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="ledger-amount" data-i18n="data.ledger.amount">المبلغ (د.إ)</label>
+                  <input id="ledger-amount" type="number" step="0.01" required />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="ledger-desc-ar" data-i18n="data.ledger.descAr">الوصف (عربي)</label>
+                  <input id="ledger-desc-ar" type="text" required />
+                </div>
+                <div class="form-group">
+                  <label for="ledger-desc-en" data-i18n="data.ledger.descEn">الوصف (English)</label>
+                  <input id="ledger-desc-en" type="text" required />
+                </div>
+              </div>
+              <div class="form-actions-inline">
+                <button type="submit" class="primary-btn" data-i18n="data.ledger.save">حفظ الحركة</button>
+                <button type="button" class="ghost-btn" data-reset-ledger data-i18n="data.actions.reset">
+                  إلغاء التعديلات
+                </button>
+              </div>
+            </form>
+            <ul id="ledger-list" class="data-list" aria-live="polite"></ul>
+          </section>
+
+          <section class="data-section">
+            <header>
+              <h4 data-i18n="data.cases.heading">القضايا الإيجارية</h4>
+              <p data-i18n="data.cases.caption">عدّل بيانات المستأجر، الحالة، والمطالبة المالية لكل قضية.</p>
+            </header>
+            <form id="case-manage-form" class="stack-form">
+              <input type="hidden" id="case-index" value="-1" />
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="case-manage-number" data-i18n="data.cases.number">رقم القضية</label>
+                  <input id="case-manage-number" type="text" required />
+                </div>
+                <div class="form-group">
+                  <label for="case-manage-property" data-i18n="data.cases.property">العقار المرتبط</label>
+                  <select id="case-manage-property" required></select>
+                </div>
+                <div class="form-group">
+                  <label for="case-manage-status" data-i18n="data.cases.status">الحالة</label>
+                  <select id="case-manage-status" required>
+                    <option value="warning" data-i18n="cases.form.status.waiting">بانتظار جلسة</option>
+                    <option value="info" data-i18n="cases.form.status.negotiation">تفاوض</option>
+                    <option value="success" data-i18n="cases.form.status.judgement">حكم ابتدائي</option>
+                    <option value="danger" data-i18n="cases.form.status.execution">تنفيذ</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="case-manage-tenant-ar" data-i18n="data.cases.tenantAr">المستأجر (عربي)</label>
+                  <input id="case-manage-tenant-ar" type="text" required />
+                </div>
+                <div class="form-group">
+                  <label for="case-manage-tenant-en" data-i18n="data.cases.tenantEn">المستأجر (English)</label>
+                  <input id="case-manage-tenant-en" type="text" required />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="case-manage-stop-date" data-i18n="data.cases.stopDate">تاريخ توقف السداد</label>
+                  <input id="case-manage-stop-date" type="date" required />
+                </div>
+                <div class="form-group">
+                  <label for="case-manage-action-ar" data-i18n="data.cases.actionAr">آخر إجراء (عربي)</label>
+                  <input id="case-manage-action-ar" type="text" required />
+                </div>
+                <div class="form-group">
+                  <label for="case-manage-action-en" data-i18n="data.cases.actionEn">آخر إجراء (English)</label>
+                  <input id="case-manage-action-en" type="text" required />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="case-manage-legal-fees" data-i18n="data.cases.legalFees">مصاريف القضية (د.إ)</label>
+                  <input id="case-manage-legal-fees" type="number" min="0" step="0.01" />
+                </div>
+                <div class="form-group">
+                  <label for="case-manage-override" data-i18n="data.cases.override">تعديل يدوي</label>
+                  <input
+                    id="case-manage-override"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder=""
+                    data-i18n-placeholder="cases.form.overridePlaceholder"
+                  />
+                </div>
+                <div class="form-group read-only">
+                  <label data-i18n="data.cases.autoAmount">القيمة المحسوبة</label>
+                  <div class="calculated-amount" id="case-manage-calculated">—</div>
+                </div>
+              </div>
+              <div class="form-actions-inline">
+                <button type="submit" class="primary-btn" data-i18n="data.cases.save">حفظ القضية</button>
+                <button type="button" class="ghost-btn" data-reset-case data-i18n="data.actions.reset">
+                  إلغاء التعديلات
+                </button>
+              </div>
+            </form>
+            <ul id="case-list" class="data-list" aria-live="polite"></ul>
+          </section>
+        </div>
+      </div>
+    </div>
 
     <div
       id="account-modal"
